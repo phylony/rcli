@@ -29,7 +29,11 @@ pub fn process_csv(input: &str, output: String, format:OutputFormat)->anyhow::Re
         let json_val =headers.iter().zip(record.iter()).collect::<Value>();
         ret.push(json_val);
     }
-    let json=serde_json::to_string_pretty(&ret)?;
-    fs::write(output,json)?;
+    let content=match format{
+        OutputFormat::Json =>serde_json::to_string_pretty(&ret)?,
+        OutputFormat::Yaml =>serde_yaml::to_string(&ret)?,
+        OutputFormat::Toml => toml::to_string(&ret)?,
+    };
+    fs::write(output,content)?;
     Ok(())
 }
