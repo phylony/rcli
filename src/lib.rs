@@ -1,5 +1,5 @@
-mod opts;
+mod cli;
 mod process;
 
-pub use opts::{Opts,SubCommand};
-pub use process::{process_csv,Player};
+pub use cli::{Opts,SubCommand,Base64DecodeOpts,Base64EncodeOpts,Base64SubCommand};
+pub use process::*;
